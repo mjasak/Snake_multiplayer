@@ -6,21 +6,11 @@ from game import SnakeGameAI, Direction, Point
 from model import Linear_QNet, QTrainer
 from helper import plot
 
-MAX_MEMORY = 100_000
-BATCH_SIZE = 1000
+import config
+from config import lr, MAX_MEMORY, BATCH_SIZE
 
 
-def lr(n_game):
-    return 0.001
-    # if n_game < 40:
-    #     return 0.001
-    # elif n_game < 80:
-    #     return 0.0001
-    # else:
-    #     return 0.00001
-
-
-LR = 0.001
+SHARED_MEMORY = deque(maxlen=MAX_MEMORY)
 
 
 class Agent:
@@ -28,10 +18,11 @@ class Agent:
         self.n_games = 0
         self.epsilon = 0  # parameter to control randomness
         self.gamma = 0.9  # discount rate
-        self.memory = deque(maxlen=MAX_MEMORY)  # popleft()
+        self.memory = SHARED_MEMORY  # popleft()
         self.model = Linear_QNet(11, 256, 3)
-        # self.model.load_state_dict(torch.load("./model/model.pth"))
-        # self.model.eval()
+        if config.model_path is not None:
+            self.model.load_state_dict(torch.load(config.model_path))
+            self.model.eval()
         self.trainer = QTrainer(self.model, lr=lr(self.n_games), gamma=self.gamma)
 
     def get_state(self, game, snake, otherSnake):
@@ -135,8 +126,10 @@ def train():
         agent2.train_short_memory(state_old2, final_move2, reward2, state_new2, done)
 
         # remember
-        agent.remember(state_old, final_move, reward1, state_new, done)
-        agent2.remember(state_old2, final_move2, reward2, state_new2, done)
+        if not game.snake.game_over:
+            agent.remember(state_old, final_move, reward1, state_new, done)
+        if not game.snake2.game_over:
+            agent2.remember(state_old2, final_move2, reward2, state_new2, done)
 
         if done:
             # train the long memory plot the results
@@ -146,7 +139,9 @@ def train():
 
             agent.trainer.lr = lr(agent.n_games)
             agent2.trainer.lr = lr(agent2.n_games)
-
+            # print("###")
+            # print("MEMORY PRINT")
+            # print("snake1: ", len(agent.memory), " snake2: ", len(agent2.memory))
             agent.train_long_memory()
             agent2.train_long_memory()
 

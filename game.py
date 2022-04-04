@@ -1,4 +1,3 @@
-from ctypes.wintypes import HACCEL
 import pygame
 import random
 from enum import Enum
@@ -26,19 +25,20 @@ class Direction(Enum):
 
 
 Point = namedtuple("Point", "x, y")
+import config
 
 # rgb colors
-WHITE = (255, 255, 255)
-RED = (200, 0, 0)
-BLUE1 = (0, 0, 255)
-BLUE2 = (0, 100, 255)
-BLACK = (0, 0, 0)
-RED1 = (255, 0, 0)
-RED2 = (255, 100, 0)
-BLOCK_SIZE = 20
-SPEED = 120
-W = 1080
-H = 720
+WHITE = config.WHITE
+RED = config.RED
+BLUE1 = config.BLUE1
+BLUE2 = config.BLUE2
+BLACK = config.BLACK
+RED1 = config.RED1
+RED2 = config.RED2
+BLOCK_SIZE = config.BLOCK_SIZE
+SPEED = config.SPEED
+W = config.W
+H = config.H
 
 
 class Snake:

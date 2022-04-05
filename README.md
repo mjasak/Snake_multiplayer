@@ -45,7 +45,7 @@ Procedure can be written in 3 steps:
 
 Bellman equation:
 
-$ Q^{new}(s,a) = Q(s,a) + \alpha [R(s,a) + \gamma \bullet max Q'(s',a') - Q(s,a)] $
+$$ Q^{new}(s,a) = Q(s,a) + \alpha [R(s,a) + \gamma \bullet max Q'(s',a') - Q(s,a)] $$
 
 where:
 

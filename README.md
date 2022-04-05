@@ -44,45 +44,23 @@ Procedure can be written in 3 steps:
 ![Alt text](scheme.jpg "Deep Q learning scheme")
 
 Bellman equation:
-
-<img src="https://render.githubusercontent.com/render/math?math=Q^{new}(s,a) = Q(s,a) + \alpha [R(s,a) + \gamma \bullet max Q'(s',a') - Q(s,a)]">
-
-[comment]: # $$ Q^{new}(s,a) = Q(s,a) + \alpha [R(s,a) + \gamma \bullet max Q'(s',a') - Q(s,a)] $$
-
+$$ Q^{new}(s,a) = Q(s,a) + \alpha [R(s,a) + \gamma \bullet max Q'(s',a') - Q(s,a)] $$
 where:
 
-[comment]: # $ Q(s,a) $ - current Q value
+$Q(s,a)$ - current Q value
 
-<img src="https://render.githubusercontent.com/render/math?math=Q(s,a)"> - current Q value
+$\alpha$ - learning rate
 
+$ R(s,a)$ - reward for taking action $a$ in state $s$
 
-[comment]: # $ \alpha $ - learning rate
-
-<img src="https://render.githubusercontent.com/render/math?math=\alpha">
-
-[comment]: # $ R(s,a) $ - reward for taking action $ a $ in state $ s $
-
-<img src="https://render.githubusercontent.com/render/math?math=Q^{new}(s,a) = Q(s,a) + \alpha [R(s,a) + \gamma \bullet max Q'(s',a') - Q(s,a)]">
-
-[comment]: # $ \gamma $ - discount rate
-
-<img src="https://render.githubusercontent.com/render/math?math=Q^{new}(s,a) = Q(s,a) + \alpha [R(s,a) + \gamma \bullet max Q'(s',a') - Q(s,a)]">
+$\gamma $ - discount rate
 
 But in this project, I'll use simplified version of Q-update where:
+$$ Q = model.prediction(s_0)$$
+$$ Q^{new} = R + \gamma \bullet max(model.prediction(s_1))$$
 
-<img src="https://render.githubusercontent.com/render/math?math=Q^{new}(s,a) = Q(s,a) + \alpha [R(s,a) + \gamma \bullet max Q'(s',a') - Q(s,a)]">
-
-[comment]: # $ Q = model.prediction(s_0) $
-
-<img src="https://render.githubusercontent.com/render/math?math=Q^{new}(s,a) = Q(s,a) + \alpha [R(s,a) + \gamma \bullet max Q'(s',a') - Q(s,a)]">
-
-[comment]: # $ Q^{new} = R + \gamma \bullet max(model.prediction(s_1)) $
-
-Loss function is Mean Squared Error between $ Q $ and $ Q^{new} $
-
-<img src="https://render.githubusercontent.com/render/math?math=Q^{new}(s,a) = Q(s,a) + \alpha [R(s,a) + \gamma \bullet max Q'(s',a') - Q(s,a)]">
-
-[comment]: # $ Loss = (Q^{new}-Q)^2 $
+Loss function is Mean Squared Error between $Q$ and $Q^{new}$
+$$Loss = (Q^{new}-Q)^2$$
 
 Weights are updated with Adam optimizer.
 
@@ -113,7 +91,7 @@ Single state is made of 11 binary values:
 
 All these values put together in a single vector define game state for a snake.
 For example vector :
- [1,0,0, 0,1,0,0, 1,0,1,0]  means that snake is going right, there's danger ahead and the food is somewhere north-west from its perpective.
+$ [1,0,0, 0,1,0,0, 1,0,1,0]$ means that snake is going right, there's danger ahead and the food is somewhere north-west from its perpective.
 
 
 ### Action
@@ -156,7 +134,7 @@ Core part of training function is an infinite loop iterating through game steps.
 6. Commit training sample to long term memory.
 7. If game is over, retrain model with randomly chosen batch from a memory. A memory is shared between agents to evenly train both agents and to speed up creating a database.
 8. Update scores and update a score plot. 
-9. Reset the environment and start new game. 
+9. Reset the environment and start new game.
 
 
 ## Coming soon ... 

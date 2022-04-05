@@ -44,7 +44,9 @@ Procedure can be written in 3 steps:
 ![Alt text](scheme.jpg "Deep Q learning scheme")
 
 Bellman equation:
-$$ Q^{new}(s,a) = Q(s,a) + \alpha [R(s,a) + \gamma \bullet max Q'(s',a') - Q(s,a)] $$
+```math
+Q^{new}(s,a) = Q(s,a) + \alpha [R(s,a) + \gamma \bullet max Q'(s',a') - Q(s,a)]
+```
 where:
 
 $Q(s,a)$ - current Q value

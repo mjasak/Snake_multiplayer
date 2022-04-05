@@ -44,23 +44,28 @@ Procedure can be written in 3 steps:
 ![Alt text](scheme.jpg "Deep Q learning scheme")
 
 Bellman equation:
-$$` Q^{new}(s,a) = Q(s,a) + \alpha [R(s,a) + \gamma \bullet max Q'(s',a') - Q(s,a)] `$$
+
+$ Q^{new}(s,a) = Q(s,a) + \alpha [R(s,a) + \gamma \bullet max Q'(s',a') - Q(s,a)] $
+
 where:
 
-$Q(s,a)$ - current Q value
+$ Q(s,a) $ - current Q value
 
-$\alpha$ - learning rate
+$ \alpha $ - learning rate
 
-$ R(s,a)$ - reward for taking action $a$ in state $s$
+$ R(s,a) $ - reward for taking action $ a $ in state $ s $
 
-$\gamma $ - discount rate
+$ \gamma $ - discount rate
 
 But in this project, I'll use simplified version of Q-update where:
-$$ Q = model.prediction(s_0)$$
-$$ Q^{new} = R + \gamma \bullet max(model.prediction(s_1))$$
 
-Loss function is Mean Squared Error between $Q$ and $Q^{new}$
-$$Loss = (Q^{new}-Q)^2$$
+$ Q = model.prediction(s_0) $
+
+$ Q^{new} = R + \gamma \bullet max(model.prediction(s_1)) $
+
+Loss function is Mean Squared Error between $ Q $ and $ Q^{new} $
+
+$ Loss = (Q^{new}-Q)^2 $
 
 Weights are updated with Adam optimizer.
 
@@ -91,7 +96,7 @@ Single state is made of 11 binary values:
 
 All these values put together in a single vector define game state for a snake.
 For example vector :
-$ [1,0,0, 0,1,0,0, 1,0,1,0]$ means that snake is going right, there's danger ahead and the food is somewhere north-west from its perpective.
+$ [1,0,0, 0,1,0,0, 1,0,1,0] $ means that snake is going right, there's danger ahead and the food is somewhere north-west from its perpective.
 
 
 ### Action

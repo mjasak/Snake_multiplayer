@@ -23,5 +23,11 @@ BATCH_SIZE = 1000
 def lr(n_game):
     return 0.001
 
+
 # model path
 model_path = None
+
+# model parameters
+gamma = 0.9 # discount rate
+epsilon = 0 # parameter to control randomness
+epsilon_zero = 80

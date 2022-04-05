@@ -16,8 +16,8 @@ SHARED_MEMORY = deque(maxlen=MAX_MEMORY)
 class Agent:
     def __init__(self):
         self.n_games = 0
-        self.epsilon = 0  # parameter to control randomness
-        self.gamma = 0.9  # discount rate
+        self.epsilon = config.epsilon  # parameter to control randomness
+        self.gamma = config.gamma  # discount rate
         self.memory = SHARED_MEMORY  # popleft()
         self.model = Linear_QNet(11, 256, 3)
         if config.model_path is not None:
@@ -27,10 +27,10 @@ class Agent:
 
     def get_state(self, game, snake, otherSnake):
         head = snake.head
-        point_l = Point(head.x - 20, head.y)
-        point_r = Point(head.x + 20, head.y)
-        point_u = Point(head.x, head.y - 20)
-        point_d = Point(head.x, head.y + 20)
+        point_l = Point(head.x - config.BLOCK_SIZE, head.y)
+        point_r = Point(head.x + config.BLOCK_SIZE, head.y)
+        point_u = Point(head.x, head.y - config.BLOCK_SIZE)
+        point_d = Point(head.x, head.y + config.BLOCK_SIZE)
 
         dir_l = snake.direction == Direction.LEFT
         dir_r = snake.direction == Direction.RIGHT
@@ -83,7 +83,7 @@ class Agent:
 
     def get_action(self, state):
         # random moves: trade-off
-        self.epsilon = 80 - self.n_games
+        self.epsilon = config.epsilon_zero - self.n_games
         final_move = [0, 0, 0]
         if random.randint(0, 200) < self.epsilon:
             move = random.randint(0, 2)
